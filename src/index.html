@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Youtubeer</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.js"
+      integrity="sha512-OrFi/o1Q/S2pE3BW4onymzI8UXBwYLwaM64Dsp9Oe1LzC23Nh4pC8c8cJ1M8SmjErNEgMBrK5z5PNyIPxSiirg=="
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      .ytst {
+        max-width: 90px;
+        position: relative;
+      }
+
+      .time {
+        position: absolute;
+        bottom: 0px;
+        right: 12px;
+        background: black;
+        font-size: 10px;
+        font-weight: bold;
+        color: white;
+        padding: 0px 2px;
+        line-height: 12px;
+      }
+
+      .yt-info {
+        font-size: 12px;
+        line-height: 14px;
+        padding-top: 5px;
+      }
+
+      .bs-example {
+        font-family: 'Roboto', 'Arial', sans-serif;
+        position: relative;
+        margin: 100px;
+      }
+
+      .typeahead,
+      .tt-query,
+      .tt-hint {
+        border: 2px solid #cccccc;
+        border-radius: 8px;
+        height: 30px;
+        line-height: 30px;
+        outline: medium none;
+        padding: 8px 12px;
+      }
+
+      .typeahead {
+        background-color: #ffffff;
+        width: 100%;
+      }
+
+      .typeahead:focus {
+        border: 2px solid #0097cf;
+      }
+
+      .tt-query {
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+      }
+
+      .tt-hint {
+        color: #999999;
+      }
+
+      .tt-menu {
+        background-color: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        /* margin-top: 12px; */
+        padding: 8px 0;
+        width: 100%;
+      }
+
+      .tt-suggestion {
+        padding: 3px;
+        margin: unset;
+        max-height: 96px;
+        border-top: solid 1px darkslateblue;
+        display: flex;
+        align-items: center;
+        line-height: 18px;
+      }
+
+      .tt-suggestion:first-of-type {
+        border-top: solid 0px darkslateblue;
+      }
+
+      .tt-suggestion:hover {
+        cursor: pointer;
+        background-color: #0097cf;
+        color: #ffffff;
+      }
+
+      .tt-suggestion p {
+        margin: 0;
+      }
+
+      .twitter-typeahead {
+        width: 100%;
+      }
+
+      #custom-templates .empty-message {
+        padding: 5px 10px;
+        text-align: center;
+      }
+
+      .yt-title {
+        font-family: 'Roboto', 'Arial', sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      body {
+        padding-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div id="custom-template">
+          <input class="typeahead" type="text" placeholder="Youtubeer Search" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script type="text/javascript">
+  function kFormatter(num) {
+    return Math.abs(num) > 999
+      ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + 'k'
+      : Math.sign(num) * Math.abs(num)
+  }
+  function httpGetAsync(theUrl, callback) {
+    var xmlHttp = new XMLHttpRequest()
+    xmlHttp.onreadystatechange = function () {
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        callback(xmlHttp.responseText)
+    }
+    xmlHttp.open('GET', theUrl, true)
+    xmlHttp.send(null)
+  }
+
+  $(document).ready(function () {
+    $('.typeahead').on('typeahead:selected', function (evt, item) {
+      window.location = `/${item.type}/${item.id}`
+    })
+
+    var search = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: {
+        url: '/search/%QUERY',
+        wildcard: '%QUERY'
+      }
+    })
+
+    $('#custom-template .typeahead').typeahead(null, {
+      name: 'yt-search',
+      limit: 9,
+      display: 'title',
+      source: search,
+      templates: {
+        empty: [
+          '<div class="empty-message">',
+          'unable to find any songs',
+          '</div>'
+        ].join('\n'),
+        suggestion: function (data) {
+          return `
+            <div class="row">
+              <div class="ytst">
+                ${
+                  data.duration
+                    ? `<div class="time">${data.duration}</div>`
+                    : ''
+                }
+                <img class="img-fluid" src="${data.titleImage}">
+              </div>
+              <div class="col">
+                <div class="row">
+                  <div class="col yt-title">${data.title}</div>
+                </div>
+                <div class="row">
+                  <div class="col yt-info">${kFormatter(
+                    data.views
+                  )} views &#8226; ${data.created}
+                    <br>
+                    ${data.artist}
+                  </div>
+                </div>
+              </div>
+            </div>`
+        }
+      }
+    })
+  })
+</script>
