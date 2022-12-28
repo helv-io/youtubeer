@@ -1,6 +1,6 @@
-FROM node:latest
+FROM alpine:latest
+RUN apk add --update npm ffmpeg
 WORKDIR /usr/src/app
-RUN apt update && apt install -y ffmpeg && rm -rf /var/lib/apt/lists/*
 ADD src package*.json /usr/src/app/
 RUN npm install --omit=dev
 EXPOSE 3000
