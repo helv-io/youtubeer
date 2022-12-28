@@ -55,7 +55,7 @@ export const YTDownload = async (id: string, res: Response) => {
     const song = sanitize(youtube.player_response.videoDetails.title, { replacement: '_' }).replaceAll('-', '_')
     const videoFile = path.join(os.tmpdir(), `${artist} - ${song}.mov`)
     const audioFile = path.join(os.tmpdir(), `${artist} - ${song}.webm`)
-    const karaokeFile = path.join(output, `${song}.mp4`)
+    const karaokeFile = path.join(output, `${artist} - ${song}.mp4`)
     let timeout = false
 
     // Push Job instance and return to browser
