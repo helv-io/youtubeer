@@ -36,28 +36,41 @@ Don't forget the volume mountpoint!
 
 ### SearchResult:
 ```
-{
-    "id": "oavMtUWDBTM",
+[
+  {
+    "id": "TClQ0UcqyzI",
     "type": "youtube",
-    "views": 38000000,
-    "title": "Mr. Trololo original upload",
-    "artist": "RealPapaPit",
-    "titleImage": "some-url",
-    "authorImage": "some-url",
-    "duration": "2:42",
-    "created": "13 years ago"
-}
+    "views": 21733,
+    "title": "Rebecca Black - Friday - Karaoke Version from Zoom Karaoke",
+    "artist": "Zoom Karaoke Official",
+    "titleImage": "https://i.ytimg.com/vi/TClQ0UcqyzI/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDxRGLMi_9yBKt4WFjm0EkaNoM7qA",
+    "authorImage": "https://yt3.ggpht.com/74WoxbEEAI01vxRH5fnWACZfcZJqayONxX9vJxA-gnesRrb0-YYU86MkUqlmnyoHIU2kX2Xdkg=s68-c-k-c0x00ffffff-no-rj",
+    "duration": "3:41",
+    "created": "2 years ago"
+  },
+  {
+    "id": "z_mp2ZAOkpc",
+    "type": "youtube",
+    "views": 5148,
+    "title": "Friday - Rebecca Black (Karaoke Version)",
+    "artist": "EasyKaraoke",
+    "titleImage": "https://i.ytimg.com/vi/z_mp2ZAOkpc/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBp4ZzfjeLbSlI721Jy9lSU2OTCXw",
+    "authorImage": "https://yt3.ggpht.com/ytc/AMLnZu_LXKxAzKzgXezb2kzWIUeechpt26wpCXcDGW6K=s68-c-k-c0x00ffffff-no-rj",
+    "duration": "3:55",
+    "created": "2 years ago"
+  }
+]
 ```
 
 ### Job:
 ```
 {
-  "id": "oavMtUWDBTM",
+  "id": "TClQ0UcqyzI",
   "success": true,
   "status": "Done",
-  "requestedOn": "2022-12-28T21:26:29.161Z",
-  "name": "RealPapaPit - Mr. Trololo original upload",
-  "file": "/media/karaoke/RealPapaPit - Mr. Trololo original upload.mp4"
+  "requestedOn": "2022-12-28T21:33:17.654Z",
+  "name": "Zoom Karaoke Official - Rebecca Black _ Friday _ Karaoke Version from Zoom Karaoke",
+  "file": "/media/karaoke/Zoom Karaoke Official - Rebecca Black _ Friday _ Karaoke Version from Zoom Karaoke.mp4"
 }
 ```
 
