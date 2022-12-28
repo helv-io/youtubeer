@@ -9,6 +9,8 @@ import { Job, Jobs } from './Job'
 import sanitize from 'sanitize-filename'
 import * as os from 'os'
 
+const httpTimeout = process.env.KARAOKE_TIMEOUT ? +process.env.KARAOKE_TIMEOUT || 10 : 10
+
 export const YTSearch = async (query: string, maxResults: number) => {
   try {
     const results = await YouTubeSearch(`${query} karaoke`, { limit: 50 })
@@ -66,7 +68,7 @@ export const YTDownload = async (id: string, res: Response) => {
     setTimeout(() => {
       timeout = true
       if (!job.success) { res.redirect(`/status/${id}`) }
-    }, 10000)
+    }, httpTimeout * 1000)
 
     // Download and join files
     console.log('Downloading Video')
