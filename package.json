@@ -10,6 +10,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/helv-io/youtubeer.git"
   },
+  "private":"true",
   "author": "Helvio88",
   "license": "GPL-3.0-or-later",
   "bugs": {
