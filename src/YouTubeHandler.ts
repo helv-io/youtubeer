@@ -106,7 +106,7 @@ export const YTDownload = async (id: string, res: Response) => {
     job.file = karaokeFile
 
     // Redirect to status page
-    if (!timeout) { res.redirect(`/status/${id}`) }
+    if (!timeout) { res.json(job).end() }
   } catch (error) {
     console.error(error)
     res.status(500).json(error).end()
