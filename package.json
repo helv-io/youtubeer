@@ -2,9 +2,10 @@
   "name": "youtubeer",
   "version": "1.0.0",
   "description": "An API to download Karaoke videos from Youtube",
-  "main": "index.ts",
+  "main": "tmp/dist.js",
   "scripts": {
-    "dev": "nodemon index.ts"
+    "dev": "nodemon src/index.ts",
+    "build": "npx esbuild src/index.ts --bundle --platform=node --outfile=tmp/dist.js"
   },
   "repository": {
     "type": "git",

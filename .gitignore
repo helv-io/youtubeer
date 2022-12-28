@@ -1,7 +1,3 @@
 node_modules/
-NUSAutoLyrixAlign/
-singularity-2.5.2/
 tmp/
 .idea/
-kaldi/
-pretrained_models/
