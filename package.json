@@ -5,7 +5,7 @@
   "main": "tmp/dist.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "npx esbuild src/index.ts --bundle --platform=node --outfile=tmp/dist.js"
+    "build": "npx esbuild src/index.ts --bundle --minify --platform=node --outfile=tmp/dist.js"
   },
   "repository": {
     "type": "git",
