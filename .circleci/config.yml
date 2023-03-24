@@ -10,10 +10,10 @@ jobs:
       - setup_remote_docker
       - checkout
       - docker/build:
-          image: $DOCKER_USERNAME/$CIRCLE_PROJECT_REPONAME
+          image: $DOCKER_USERNAME$CIRCLE_PROJECT_REPONAME
       - docker/push:
           digest-path: /tmp/digest.txt
-          image: $DOCKER_USERNAME/$CIRCLE_PROJECT_REPONAME
+          image: $DOCKER_USERNAME$CIRCLE_PROJECT_REPONAME
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
