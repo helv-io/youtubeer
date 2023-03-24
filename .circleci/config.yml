@@ -5,15 +5,19 @@ orbs:
   docker: circleci/docker@2.2.0
 
 jobs:
+  npm-build:
+    executor: node/default
+    steps:
+      - run:
+          command: |
+            npm i --omit=dev
+            npm run build
+
   build-and-push:
     executor: docker/docker
     steps:
       - setup_remote_docker
       - checkout
-      - run:
-          command: |
-            npm i --omit=dev
-            npm run build
       - docker/build:
           image: $DOCKER_USERNAME$CIRCLE_PROJECT_REPONAME
       - docker/push:
@@ -25,4 +29,5 @@ jobs:
 workflows:
   commit:
     jobs:
+      - npm-build
       - build-and-push
