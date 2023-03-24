@@ -20,6 +20,7 @@ jobs:
       - run:
           name: Build and push the Docker images
           command: |
+            docker buildx install
             docker buildx create --name mybuilder
             docker buildx use mybuilder
             docker buildx inspect --bootstrap
