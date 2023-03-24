@@ -8,6 +8,7 @@ jobs:
   npm-build:
     executor: node/default
     steps:
+      - checkout
       - run:
           command: |
             npm i --omit=dev
@@ -17,7 +18,6 @@ jobs:
     executor: docker/docker
     steps:
       - setup_remote_docker
-      - checkout
       - docker/build:
           image: $DOCKER_USERNAME$CIRCLE_PROJECT_REPONAME
       - docker/push:
