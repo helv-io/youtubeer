@@ -9,6 +9,10 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
+      - run:
+          command: |
+            npm i --omit=dev
+            npm run build
       - docker/build:
           image: $DOCKER_USERNAME$CIRCLE_PROJECT_REPONAME
       - docker/push:
