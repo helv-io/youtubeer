@@ -1,32 +1,27 @@
-version: 2.1
-
-orbs:
-  node: circleci/node@5.1.0
-  docker: circleci/docker@2.2.0
-
 jobs:
   build:
-    docker:
-      - image: circleci/node:lts
-    executor: docker/docker
+    executor: node/default
     steps:
       - checkout
-      - node/install
       - run:
-          name: Build the project
+          name: Build project
           command: |
             npm i --omit=dev
             npm run build
-      - run:
-          name: Build and push the Docker images
-          command: |
-            docker buildx install
-            docker buildx create --name mybuilder
-            docker buildx use mybuilder
-            docker buildx inspect --bootstrap
-            docker buildx build --platform linux/amd64,linux/arm64 -t helvio/api:latest --push .
-
-workflows:
-  build-and-publish:
-    jobs:
-      - build
+      - docker/build:
+          context: .
+          dockerfile: Dockerfile
+          tags:
+            - helvio/api:latest
+            - helvio/api:${CIRCLE_SHA1:0:7}
+            - helvio/api:${CIRCLE_TAG}
+            - helvio/api:${CIRCLE_BRANCH}
+            - helvio/api:latest-arm64
+            - helvio/api:${CIRCLE_SHA1:0:7}-arm64
+            - helvio/api:${CIRCLE_TAG}-arm64
+            - helvio/api:${CIRCLE_BRANCH}-arm64
+          build-args:
+            ARCH: arm64,amd64
+      - docker/push:
+          image: helvio/api
+          tag: latest
