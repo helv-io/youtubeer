@@ -5,29 +5,25 @@ orbs:
   docker: circleci/docker@2.2.0
 
 jobs:
-  npm-build:
-    executor: node/default
-    steps:
-      - checkout
-      - run:
-          command: |
-            npm i --omit=dev
-            npm run build
-
-  build-and-push:
+  build:
+    docker:
+      - image: circleci/node:lts
     executor: docker/docker
     steps:
-      - setup_remote_docker
-      - docker/build:
-          image: $DOCKER_USERNAME$CIRCLE_PROJECT_REPONAME
-      - docker/push:
-          digest-path: /tmp/digest.txt
-          image: $DOCKER_USERNAME$CIRCLE_PROJECT_REPONAME
+      - checkout
+      - node/install
       - run:
+          name: Build the project
+          command: npm run build
+      - run:
+          name: Build and push the Docker images
           command: |
-            echo "Digest is: $(</tmp/digest.txt)"
+            docker buildx create --name mybuilder
+            docker buildx use mybuilder
+            docker buildx inspect --bootstrap
+            docker buildx build --platform linux/amd64,linux/arm64 -t helvio/api:latest --push .
+
 workflows:
-  commit:
+  build-and-publish:
     jobs:
-      - npm-build
-      - build-and-push
+      - build
