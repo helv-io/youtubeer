@@ -23,7 +23,7 @@
     "express": "^4.18.2",
     "sanitize-filename": "^1.6.3",
     "stream-to-promise": "^3.0.0",
-    "ytdl-core": "^4.11.2",
+    "ytdl-core": "^4.11.4",
     "ytsr": "^3.8.0"
   },
   "devDependencies": {
